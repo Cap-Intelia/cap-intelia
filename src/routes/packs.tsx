@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CtaBand, PageHero } from "@/components/SiteLayout";
-import { PackCards } from "./index";
+import { PackCards } from "@/components/Blocks";
 
 export const Route = createFileRoute("/packs")({
   head: () => ({
