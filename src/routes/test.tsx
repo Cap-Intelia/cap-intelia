@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { QUESTIONS, computeScore, levelFor, LEVELS } from "@/lib/maturity";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/test")({
   head: () => ({
     meta: [
       { title: "Simulateur de maturité IA pour PME | Cap Intelia" },
@@ -28,12 +28,8 @@ function Simulator() {
   const restart = () => { setAnswers([]); setStep(-1); };
 
   return (
-    <main className="min-h-screen px-5 py-10 md:py-16">
+    <main className="px-5 py-14 md:py-20">
       <div className="mx-auto max-w-3xl">
-        <header className="mb-10 flex items-center justify-between">
-          <a href="https://cap-intelia.com/" className="font-display text-xl font-semibold text-primary">Cap Intelia</a>
-          <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Simulateur IA · PME</span>
-        </header>
 
         {step === -1 && <Intro onStart={() => setStep(0)} />}
         {step >= 0 && step < QUESTIONS.length && (
@@ -53,14 +49,14 @@ function Simulator() {
 function Intro({ onStart }: { onStart: () => void }) {
   return (
     <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">Diagnostic gratuit · 2 minutes</p>
+      <p className="mb-4 eyebrow">Diagnostic gratuit · 2 minutes</p>
       <h1 className="text-4xl leading-tight font-semibold text-primary md:text-6xl">
         Quelle est la maturité IA de votre entreprise&nbsp;?
       </h1>
       <p className="mt-6 max-w-xl text-lg text-muted-foreground">
         Répondez à 5 questions et obtenez votre score sur 100, votre niveau de maturité et les actions prioritaires pour faire de l'IA un levier de croissance.
       </p>
-      <button onClick={onStart} className="mt-10 rounded-full bg-primary px-8 py-4 font-semibold text-primary-foreground shadow-soft transition hover:-translate-y-0.5">
+      <button onClick={onStart} className="btn btn-accent mt-10 px-8 py-4">
         Démarrer le diagnostic →
       </button>
       <div className="mt-14 grid gap-4 sm:grid-cols-3">
@@ -154,7 +150,7 @@ function Result({ score, onRestart }: { score: number; onRestart: () => void }) 
         </div>
         <div className="flex flex-wrap gap-3">
           <a href={`mailto:contact@cap-intelia.fr?subject=${encodeURIComponent(`Diagnostic IA - score ${score}/100`)}`} className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground">Prendre rendez-vous</a>
-          <a href="https://cap-intelia.com/offres" target="_blank" rel="noreferrer" className="rounded-full border border-primary-foreground/40 px-6 py-3 font-semibold">Voir les offres</a>
+          <Link to="/packs" className="rounded-full border border-primary-foreground/40 px-6 py-3 font-semibold">Voir les packs</Link>
         </div>
       </div>
       <button onClick={onRestart} className="mt-8 text-sm text-muted-foreground hover:text-primary">↺ Refaire le diagnostic</button>
