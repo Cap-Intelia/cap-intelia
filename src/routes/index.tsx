@@ -76,7 +76,7 @@ function Intro({ onStart }: { onStart: () => void }) {
   );
 }
 
-function QuestionCard({ index, selected, onChoose, onBack }: { index: number; selected?: number; onChoose: (p: number) => void; onBack: () => void }) {
+function QuestionCard({ index, selected, onChoose, onBack }: { index: number; selected: number | undefined; onChoose: (p: number) => void; onBack: () => void }) {
   const q = QUESTIONS[index]!;
   return (
     <section key={index} className="animate-in fade-in slide-in-from-right-4 duration-300">
