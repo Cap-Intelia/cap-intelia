@@ -104,7 +104,7 @@ export function computeScore(answers: number[]): number {
 }
 
 export function levelFor(score: number): Level {
-  if (score < 35) return LEVELS[0];
-  if (score < 70) return LEVELS[1];
-  return LEVELS[2];
+  if (score < 35) return LEVELS[0]!;
+  if (score < 70) return LEVELS[1]!;
+  return LEVELS[2]!;
 }
