@@ -1,163 +1,83 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { QUESTIONS, computeScore, levelFor, LEVELS } from "@/lib/maturity";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { CtaBand } from "@/components/SiteLayout";
+import { ThemeGrid, PackCards } from "@/components/Blocks";
+import { CONTACT, PILLARS } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Simulateur de maturité IA pour PME | Cap Intelia" },
-      { name: "description", content: "Évaluez la maturité IA de votre PME en 5 questions et obtenez un score sur 100 avec des recommandations Cap Intelia." },
-      { property: "og:title", content: "Simulateur de maturité IA pour PME | Cap Intelia" },
-      { property: "og:description", content: "5 questions, un score sur 100 et un plan d'action IA adapté à votre entreprise." },
+      { title: "Cap-intelia — L'IA au service de la croissance des TPE et PME" },
+      { name: "description", content: "Conférences, conseil, formations et agents IA pour les TPE et PME françaises. 12 thématiques, des packs clairs et un test de maturité IA gratuit." },
+      { property: "og:title", content: "Cap-intelia — L'IA au service de votre croissance" },
+      { property: "og:description", content: "Inspirer, conseiller, former, déployer : l'IA sans jargon pour les TPE et PME." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Simulator,
+  component: Home,
 });
 
-function Simulator() {
-  const [step, setStep] = useState(-1);
-  const [answers, setAnswers] = useState<number[]>([]);
-
-  const choose = (points: number) => {
-    const next = [...answers.slice(0, step), points];
-    setAnswers(next);
-    setStep(step + 1);
-  };
-  const restart = () => { setAnswers([]); setStep(-1); };
-
+function Home() {
   return (
-    <main className="min-h-screen px-5 py-10 md:py-16">
-      <div className="mx-auto max-w-3xl">
-        <header className="mb-10 flex items-center justify-between">
-          <a href="https://cap-intelia.com/" className="font-display text-xl font-semibold text-primary">Cap Intelia</a>
-          <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Simulateur IA · PME</span>
-        </header>
+    <main>
+      <section className="py-16 md:py-24">
+        <div className="container-site grid items-center gap-12 lg:grid-cols-2">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <p className="eyebrow">Pour les TPE et PME françaises</p>
+            <h1 className="mt-5 text-5xl font-bold leading-[1.02] text-primary md:text-7xl">L'IA au service de votre croissance, sans jargon.</h1>
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">Dix usages concrets, du référencement à la facturation. Nous inspirons, conseillons, formons et déployons avec vous : de la première conférence au premier workflow en production.</p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a href={CONTACT.rdv} className="btn btn-accent">Prendre rendez-vous</a>
+              <Link to="/thematiques" className="btn btn-outline">Explorer les 12 thématiques</Link>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground shadow-soft md:p-14 animate-in fade-in zoom-in-95 duration-700">
+            <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-soft">Votre point de départ</p>
+            <h2 className="mt-4 text-4xl font-bold">Testez votre maturité IA</h2>
+            <p className="mt-4 text-primary-foreground/75">Situez votre entreprise en 5 questions, obtenez un score sur 100 et découvrez par quelle thématique commencer.</p>
+            <div className="mt-6 flex flex-wrap gap-2 text-xs text-primary-foreground/70">
+              {["5 questions", "2 minutes", "Score sur 100", "Gratuit"].map((t) => (
+                <span key={t} className="rounded-full border border-primary-foreground/20 px-3 py-1">{t}</span>
+              ))}
+            </div>
+            <Link to="/test" className="btn btn-accent mt-8">Faire le test →</Link>
+          </div>
+        </div>
+      </section>
 
-        {step === -1 && <Intro onStart={() => setStep(0)} />}
-        {step >= 0 && step < QUESTIONS.length && (
-          <QuestionCard
-            index={step}
-            selected={answers[step]}
-            onChoose={choose}
-            onBack={() => setStep(step - 1)}
-          />
-        )}
-        {step >= QUESTIONS.length && <Result score={computeScore(answers)} onRestart={restart} />}
-      </div>
+      <section className="pb-24">
+        <div className="container-site">
+          <h2 className="text-3xl font-bold text-primary md:text-5xl">12 thématiques pour votre quotidien d'entreprise</h2>
+          <p className="mt-4 text-muted-foreground">Chaque thématique se décline en pack sur les quatre piliers : choisissez votre point d'entrée.</p>
+          <ThemeGrid />
+        </div>
+      </section>
+
+      <section className="bg-primary py-24 text-primary-foreground">
+        <div className="container-site">
+          <h2 className="text-3xl font-bold md:text-5xl">Des packs lisibles, par niveau de maturité</h2>
+          <p className="mt-4 text-primary-foreground/70">Un format pour chaque étape. Préparation incluse, jusqu'à 30 personnes, hors frais de déplacement.</p>
+          <PackCards />
+        </div>
+      </section>
+
+      <section className="py-24">
+        <div className="container-site">
+          <h2 className="text-3xl font-bold text-primary md:text-5xl">4 piliers pour un accompagnement sur mesure</h2>
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map((p) => (
+              <div key={p.name} className="card-site p-7">
+                <div className="font-display text-4xl font-bold text-accent">{p.num}</div>
+                <h3 className="mt-4 text-2xl font-bold text-primary">{p.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <CtaBand />
     </main>
   );
 }
 
-function Intro({ onStart }: { onStart: () => void }) {
-  return (
-    <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">Diagnostic gratuit · 2 minutes</p>
-      <h1 className="text-4xl leading-tight font-semibold text-primary md:text-6xl">
-        Quelle est la maturité IA de votre entreprise&nbsp;?
-      </h1>
-      <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-        Répondez à 5 questions et obtenez votre score sur 100, votre niveau de maturité et les actions prioritaires pour faire de l'IA un levier de croissance.
-      </p>
-      <button onClick={onStart} className="mt-10 rounded-full bg-primary px-8 py-4 font-semibold text-primary-foreground shadow-soft transition hover:-translate-y-0.5">
-        Démarrer le diagnostic →
-      </button>
-      <div className="mt-14 grid gap-4 sm:grid-cols-3">
-        {LEVELS.map((l, i) => (
-          <div key={l.key} className="rounded-xl border bg-card p-5">
-            <div className="text-xs text-muted-foreground">0{i + 1}</div>
-            <div className="mt-1 font-display text-lg text-primary">{l.pillar}</div>
-            <div className="text-sm text-muted-foreground">{l.name}</div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function QuestionCard({ index, selected, onChoose, onBack }: { index: number; selected: number | undefined; onChoose: (p: number) => void; onBack: () => void }) {
-  const q = QUESTIONS[index]!;
-  return (
-    <section key={index} className="animate-in fade-in slide-in-from-right-4 duration-300">
-      <div className="mb-8">
-        <div className="mb-2 flex justify-between text-sm text-muted-foreground">
-          <span>Question {index + 1} / {QUESTIONS.length}</span>
-          <span>{Math.round((index / QUESTIONS.length) * 100)} %</span>
-        </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-muted">
-          <div className="h-full bg-accent transition-all duration-500" style={{ width: `${((index + 1) / QUESTIONS.length) * 100}%` }} />
-        </div>
-      </div>
-      <h2 className="text-3xl font-semibold text-primary md:text-4xl">{q.title}</h2>
-      <p className="mt-2 text-muted-foreground">{q.hint}</p>
-      <div className="mt-8 grid gap-3">
-        {q.options.map((o, i) => (
-          <button
-            key={o.label}
-            onClick={() => onChoose(o.points)}
-            className={`flex items-center gap-4 rounded-xl border bg-card p-5 text-left transition hover:border-accent hover:shadow-soft ${selected === o.points ? "border-accent" : ""}`}
-          >
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-primary">
-              {String.fromCharCode(65 + i)}
-            </span>
-            <span className="font-medium">{o.label}</span>
-          </button>
-        ))}
-      </div>
-      <button onClick={onBack} className="mt-8 text-sm text-muted-foreground hover:text-primary">← Retour</button>
-    </section>
-  );
-}
-
-function Result({ score, onRestart }: { score: number; onRestart: () => void }) {
-  const level = levelFor(score);
-  const r = 70, c = 2 * Math.PI * r;
-  return (
-    <section className="animate-in fade-in zoom-in-95 duration-500">
-      <div className="rounded-2xl border bg-card p-8 shadow-soft md:p-10">
-        <div className="flex flex-col items-center gap-8 md:flex-row">
-          <div className="relative h-44 w-44 shrink-0">
-            <svg viewBox="0 0 160 160" className="h-full w-full -rotate-90">
-              <circle cx="80" cy="80" r={r} strokeWidth="12" className="fill-none stroke-muted" />
-              <circle cx="80" cy="80" r={r} strokeWidth="12" strokeLinecap="round" className="fill-none stroke-accent transition-all duration-1000"
-                strokeDasharray={c} strokeDashoffset={c * (1 - score / 100)} />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="font-display text-5xl font-semibold text-primary">{score}</span>
-              <span className="text-sm text-muted-foreground">/ 100</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-accent">{level.name}</p>
-            <h2 className="mt-1 text-3xl font-semibold text-primary">Pilier recommandé : {level.pillar}</h2>
-            <p className="mt-3 text-muted-foreground">{level.summary}</p>
-          </div>
-        </div>
-      </div>
-
-      <h3 className="mt-12 text-2xl font-semibold text-primary">Nos offres pour votre prochaine étape</h3>
-      <div className="mt-5 grid gap-4 md:grid-cols-2">
-        {level.recommendations.map((rec) => (
-          <div key={rec.title} className="flex flex-col rounded-xl border bg-card p-6">
-            <div className="font-display text-xl text-primary">{rec.title}</div>
-            <p className="mt-2 flex-1 text-sm text-muted-foreground">{rec.detail}</p>
-            {rec.price && <div className="mt-4 font-semibold text-accent">{rec.price}</div>}
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-10 flex flex-col gap-3 rounded-2xl bg-primary p-8 text-primary-foreground md:flex-row md:items-center md:justify-between">
-        <div>
-          <div className="font-display text-2xl">Parlons de votre feuille de route IA</div>
-          <div className="text-sm opacity-80">Un échange de 30 minutes pour affiner ce diagnostic.</div>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <a href={`mailto:contact@cap-intelia.fr?subject=${encodeURIComponent(`Diagnostic IA - score ${score}/100`)}`} className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground">Prendre rendez-vous</a>
-          <a href="https://cap-intelia.com/offres" target="_blank" rel="noreferrer" className="rounded-full border border-primary-foreground/40 px-6 py-3 font-semibold">Voir les offres</a>
-        </div>
-      </div>
-      <button onClick={onRestart} className="mt-8 text-sm text-muted-foreground hover:text-primary">↺ Refaire le diagnostic</button>
-    </section>
-  );
-}

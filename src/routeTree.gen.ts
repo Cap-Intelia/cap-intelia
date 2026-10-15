@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as MethodeRouteImport } from './routes/methode'
+import { Route as PacksRouteImport } from './routes/packs'
+import { Route as RessourcesRouteImport } from './routes/ressources'
+import { Route as TestRouteImport } from './routes/test'
+import { Route as ThematiquesIndexRouteImport } from './routes/thematiques.index'
+import { Route as ThematiquesSlugRouteImport } from './routes/thematiques.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AProposRoute = AProposRouteImport.update({
+  id: '/a-propos',
+  path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MethodeRoute = MethodeRouteImport.update({
+  id: '/methode',
+  path: '/methode',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PacksRoute = PacksRouteImport.update({
+  id: '/packs',
+  path: '/packs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RessourcesRoute = RessourcesRouteImport.update({
+  id: '/ressources',
+  path: '/ressources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThematiquesIndexRoute = ThematiquesIndexRouteImport.update({
+  id: '/thematiques/',
+  path: '/thematiques/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThematiquesSlugRoute = ThematiquesSlugRouteImport.update({
+  id: '/thematiques/$slug',
+  path: '/thematiques/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/methode': typeof MethodeRoute
+  '/packs': typeof PacksRoute
+  '/ressources': typeof RessourcesRoute
+  '/test': typeof TestRoute
+  '/thematiques/$slug': typeof ThematiquesSlugRoute
+  '/thematiques/': typeof ThematiquesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/methode': typeof MethodeRoute
+  '/packs': typeof PacksRoute
+  '/ressources': typeof RessourcesRoute
+  '/test': typeof TestRoute
+  '/thematiques/$slug': typeof ThematiquesSlugRoute
+  '/thematiques': typeof ThematiquesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/methode': typeof MethodeRoute
+  '/packs': typeof PacksRoute
+  '/ressources': typeof RessourcesRoute
+  '/test': typeof TestRoute
+  '/thematiques/$slug': typeof ThematiquesSlugRoute
+  '/thematiques/': typeof ThematiquesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/a-propos'
+    | '/methode'
+    | '/packs'
+    | '/ressources'
+    | '/test'
+    | '/thematiques/$slug'
+    | '/thematiques/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/a-propos'
+    | '/methode'
+    | '/packs'
+    | '/ressources'
+    | '/test'
+    | '/thematiques/$slug'
+    | '/thematiques'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-propos'
+    | '/methode'
+    | '/packs'
+    | '/ressources'
+    | '/test'
+    | '/thematiques/$slug'
+    | '/thematiques/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AProposRoute: typeof AProposRoute
+  MethodeRoute: typeof MethodeRoute
+  PacksRoute: typeof PacksRoute
+  RessourcesRoute: typeof RessourcesRoute
+  TestRoute: typeof TestRoute
+  ThematiquesSlugRoute: typeof ThematiquesSlugRoute
+  ThematiquesIndexRoute: typeof ThematiquesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a-propos': {
+      id: '/a-propos'
+      path: '/a-propos'
+      fullPath: '/a-propos'
+      preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/methode': {
+      id: '/methode'
+      path: '/methode'
+      fullPath: '/methode'
+      preLoaderRoute: typeof MethodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/packs': {
+      id: '/packs'
+      path: '/packs'
+      fullPath: '/packs'
+      preLoaderRoute: typeof PacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ressources': {
+      id: '/ressources'
+      path: '/ressources'
+      fullPath: '/ressources'
+      preLoaderRoute: typeof RessourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/thematiques/': {
+      id: '/thematiques/'
+      path: '/thematiques'
+      fullPath: '/thematiques/'
+      preLoaderRoute: typeof ThematiquesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/thematiques/$slug': {
+      id: '/thematiques/$slug'
+      path: '/thematiques/$slug'
+      fullPath: '/thematiques/$slug'
+      preLoaderRoute: typeof ThematiquesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AProposRoute: AProposRoute,
+  MethodeRoute: MethodeRoute,
+  PacksRoute: PacksRoute,
+  RessourcesRoute: RessourcesRoute,
+  TestRoute: TestRoute,
+  ThematiquesSlugRoute: ThematiquesSlugRoute,
+  ThematiquesIndexRoute: ThematiquesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
